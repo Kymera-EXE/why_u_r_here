@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Message</title>
+  <style>
+    body {
+      background-color: black;
+      color: #a020f0;
+      font-family: "Courier New", monospace;
+      font-size: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #container {
+      white-space: pre-line;
+      max-width: 800px;
+    }
+
+    .line {
+      opacity: 0;
+      animation: showLine 0.5s forwards;
+    }
+
+    @keyframes showLine {
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+
+  <script>
+    const lines = [
+      "Ah...aqui definitivamente não é um bom lugar.",
+      "Bom, sei exatamente doque precisa então fique com isso:",
+      "https://kymera-exe.github.io/Watchers-void/",
+      "Se divirta, destinado..."
+    ];
+
+    const container = document.getElementById("container");
+
+    let lineIndex = 0;
+    let charIndex = 0;
+    let currentLine = "";
+    let span;
+
+    function typeChar() {
+      if (lineIndex >= lines.length) return;
+
+      if (charIndex === 0) {
+        span = document.createElement("div");
+        span.classList.add("line");
+        container.appendChild(span);
+        span.style.animationDelay = `${lineIndex * 1}s`;
+      }
+
+      currentLine += lines[lineIndex][charIndex];
+      span.textContent = currentLine;
+      charIndex++;
+
+      if (charIndex < lines[lineIndex].length) {
+        setTimeout(typeChar, 40);
+      } else {
+        lineIndex++;
+        charIndex = 0;
+        currentLine = "";
+        setTimeout(typeChar, 500);
+      }
+    }
+
+    typeChar();
+  </script>
+</body>
+</html>
